@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -13,13 +14,13 @@ public class GameController : MonoBehaviour
 
     public void PushText(string text)
     {
-        _outputText.GetComponent<Text>().text = "";
-        _outputText.GetComponent<Text>().text = text;
+        _outputText.GetComponent<TextMeshPro>().text = "";
+        _outputText.GetComponent<TextMeshPro>().text = text;
     }
 
     public void GetText()
     {
-        _storedText = _inputText.GetComponent<Text>().text;
+        _storedText = _inputText.GetComponent<TextMeshPro>().text;
         PushText(_storedText);
     }
     private void PromptNameYourKingdom()
@@ -40,7 +41,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PromptNameYourKingdom();
+        //PromptNameYourKingdom();
     }
 
     // Update is called once per frame
