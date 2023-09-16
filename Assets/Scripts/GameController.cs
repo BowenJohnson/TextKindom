@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _inputText;
     [SerializeField] private GameObject _outputText;
     [SerializeField] private GameObject _enterButton;
-    private string storedText;
+    [SerializeField] private string _storedText;
 
     public void PushText(string text)
     {
@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour
 
     public void GetText()
     {
-        storedText = _inputText.GetComponent<Text>().text;
+        _storedText = _inputText.GetComponent<Text>().text;
+        PushText(_storedText);
     }
     private void PromptNameYourKingdom()
     {
@@ -33,7 +34,7 @@ public class GameController : MonoBehaviour
         {
 
         }
-        _playerKingdom.RenameKingdom(storedText);
+        _playerKingdom.RenameKingdom(_storedText);
     }
 
     // Start is called before the first frame update
