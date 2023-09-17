@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     public void GetTextButton()
     {
         _storedText = _inputText.text;
+        _inputText.text = "";
     }
     private void PromptNameYourKingdom()
     {
@@ -40,6 +41,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _inputText.ActivateInputField();
         PromptNameYourKingdom();
     }
 
