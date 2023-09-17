@@ -7,20 +7,20 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     [SerializeField] private PlayerKingdom _playerKingdom;
-    [SerializeField] private GameObject _inputText;
-    [SerializeField] private GameObject _outputText;
+    [SerializeField] private TMP_InputField _inputText;
+    [SerializeField] private TMP_Text _outputText;
     [SerializeField] private GameObject _enterButton;
     [SerializeField] private string _storedText;
 
     public void PushText(string text)
     {
-        _outputText.GetComponent<TextMeshPro>().text = "";
-        _outputText.GetComponent<TextMeshPro>().text = text;
+        _outputText.text = "";
+        _outputText.text = text;
     }
 
-    public void GetText()
+    public void GetTextButton()
     {
-        _storedText = _inputText.GetComponent<TextMeshPro>().text;
+        _storedText = _inputText.text;
         PushText(_storedText);
     }
     private void PromptNameYourKingdom()
@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //PromptNameYourKingdom();
+        PromptNameYourKingdom();
     }
 
     // Update is called once per frame
