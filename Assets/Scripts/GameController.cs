@@ -21,7 +21,6 @@ public class GameController : MonoBehaviour
     public void GetTextButton()
     {
         _storedText = _inputText.text;
-        PushText(_storedText);
     }
     private void PromptNameYourKingdom()
     {
