@@ -4,70 +4,108 @@ using UnityEngine;
 
 public class PlayerKingdom : MonoBehaviour
 {
-    [SerializeField]
-    private string _name;
-    [SerializeField]
-    private int _gold;
-    [SerializeField]
-    private int _publicOpinion;
-    [SerializeField]
-    private List<Territories> _territories;
-    [SerializeField]
-    private List<Troops> _troopTypes;
-    [SerializeField]
-    private List<Characters> _characters;
-    [SerializeField]
-    private Dictionary<string, string> policies;
+    [SerializeField] private string _name;
+    [SerializeField] private int _gold;
+    [SerializeField] private int _publicOpinion;
+    [SerializeField] private List<Territories> _territories;
+    [SerializeField] private Troops _Recruits;
+    [SerializeField] private Troops _Soldiers;
+    [SerializeField] private Troops _Veterans;
+    [SerializeField] private List<Characters> _characters;
+    [SerializeField] private Dictionary<string, string> policies;
+
+    private void Awake()
+    {
+        policies = new Dictionary<string, string>();
+    }
 
     public void RenameKingdom(string newName)
     {
         _name = newName;
     }
 
-    public string GetName()
+    public void AddGold(int gold)
     {
-        return name;
+        _gold += gold;
     }
 
-    private void Awake()
+    public void AddPublicOpinion(int opinion)
     {
-        policies = new Dictionary<string, string>();
-
-        _gold = 1000;
-        _publicOpinion = 12;
-        StartingTerritories(5);
-        StartingTroops("Recruits", 0, 6);
-        StartingTroops("Soldiers", 250, 10);
-        StartingTroops("Veterans", 0, 12);
-        string[] names = {"John", "Sarah", "Jacob", "Erin", "Sven", "Elizabeth", "Kate"};
-        StartingCharacters(7, names);
+        _publicOpinion = opinion;
     }
 
-    private void StartingTerritories(int startingSize)
+    public void StartingTerritories(int startingSize)
     {
         for (int i = 0; i < startingSize; i++)
         {
-            _territories.Add(new Territories());
+            // using ScriptableObject.CreateInstance because Territories is a scriptable object
+            _territories.Add(ScriptableObject.CreateInstance<Territories>());
         }
     }
 
-    private void StartingCharacters(int startingCast, string[] names)
+    public void StartingCharacters(int startingCast, string[] names)
     {
         for (int i = 0; i < startingCast; i++)
         {
-            Characters character = new Characters();
+            // using ScriptableObject.CreateInstance because characters is a scriptable object
+            Characters character = ScriptableObject.CreateInstance<Characters>();
             character.SetName(names[i]);
             _characters.Add(character);
         }
     }
 
-    private void StartingTroops(string rank, int count, int combatValue)
+    public void StartingTroops(int recNum, int recCombatValue, int solNum, int solCombatValue, int vetNum, int vetCombatValue)
     {
-        Troops troops;
-        troops._rank = rank;
-        troops._count = count;
-        troops._combatValue = combatValue;
+        _Recruits._rank = "Recruits";
+        _Recruits._count = recNum;
+        _Recruits._combatValue = recCombatValue;
 
-        _troopTypes.Add(troops);
+        _Soldiers._rank = "Soldiers";
+        _Soldiers._count = solNum;
+        _Soldiers._combatValue = solCombatValue;
+
+        _Veterans._rank = "Veterans";
+        _Veterans._count = vetNum;
+        _Veterans._combatValue = vetCombatValue;
+    }
+
+    public string GetName()
+    {
+        return _name;
+    }
+
+    public int GetGold()
+    {
+        return _gold;
+    }
+
+    public int GetPublicOpinion()
+    {
+        return _publicOpinion;
+    }
+
+    public int GetNumTerritories()
+    {
+        return _territories.Count;
+    }
+
+    public int GetnumCharacters()
+    {
+        return _characters.Count;
+    }
+
+    public Troops GetRecruits()
+    {
+        return _Recruits;
+    }
+
+    public Troops GetSoldiers()
+    {
+        return _Soldiers;
+    }
+
+    public Troops GetVeterans()
+    {
+        return _Veterans;
     }
 }

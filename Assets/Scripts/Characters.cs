@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Characters : ScriptableObject
 {
-    [SerializeField]
-    private string _name;
+    [SerializeField] private string _name;
 
-    [SerializeField]
-    private bool _busy;
+    [SerializeField] private bool _busy;
 
+    // runs before game start
     private void Awake()
     {
         _busy = false;

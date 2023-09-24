@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Territories : ScriptableObject
 {
-    [SerializeField]
-    private string _name;
+    [SerializeField] private string _name;
 
     // gives a random amount of gold each turn (between 60-80)
     public int GoldPerTurn()
