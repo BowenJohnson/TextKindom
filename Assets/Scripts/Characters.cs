@@ -8,6 +8,7 @@ public class Characters : ScriptableObject
 
     [SerializeField] private bool _busy;
 
+    // runs before game start
     private void Awake()
     {
         _busy = false;
