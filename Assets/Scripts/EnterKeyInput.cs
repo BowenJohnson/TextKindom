@@ -5,15 +5,21 @@ using UnityEngine;
 // this function will listen for the press of the return key and activate the UI enter button
 public class EnterKeyInput : MonoBehaviour
 {
-    [SerializeField] private GameController _gameController;
+    [SerializeField] private CourtController _courtController;
+
+    private void Start()
+    {
+        _courtController = _courtController.GetComponent<CourtController>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        // if retrun key was pressed call UI "Enter Button" function
-        if (Input.GetKeyDown(KeyCode.Return))
+        // if retrun key was pressed and court menu is active call UI "Enter Button" function
+        if (Input.GetKeyDown(KeyCode.Return) && _courtController.isActive == true)
         {
-            _gameController.GetTextButton();
+            _courtController.GetTextButton();
+            _courtController.TargetInputTextBox();
         }
     }
 }

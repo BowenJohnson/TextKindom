@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class Characters : ScriptableObject
 {
-    [SerializeField]
-    private string _name;
+    [SerializeField] private string _name;
 
-    [SerializeField]
-    private bool _busy;
+    [SerializeField] private bool _busy;
 
     private void Awake()
     {
