@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _statsMenu;
     [SerializeField] private GameObject _tabsUI;
 
+    [SerializeField] private bool _skipNewGame;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,9 +44,17 @@ public class GameController : MonoBehaviour
         string[] names = { "John", "Sarah", "Jacob", "Erin", "Sven", "Elizabeth", "Kate" };
         _playerKingdom.StartingCharacters(7, names);
 
-        // get kingdom name
-        ActivateNewGameMenu();
-        _newGameController.PushText("Name your Kingdom.");
+        if (!_skipNewGame)
+        {
+            // get kingdom name
+            ActivateNewGameMenu();
+            _newGameController.PushText("Name your Kingdom.");
+        }
+        else
+        {
+            _tabsUI.SetActive(true);
+            ActivateCourtMenu();
+        }
     }
 
     public void ActivateNewGameMenu()
