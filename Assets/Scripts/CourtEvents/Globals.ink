@@ -1,0 +1,1 @@
+VAR gold = 0

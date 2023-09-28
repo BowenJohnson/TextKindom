@@ -79,6 +79,11 @@ public class PlayerKingdom : MonoBehaviour
         return _gold;
     }
 
+    public void SetGold(int newGold)
+    {
+        _gold = newGold;
+    }
+
     public int GetPublicOpinion()
     {
         return _publicOpinion;

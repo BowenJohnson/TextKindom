@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Ink.Runtime;
+using Ink.UnityIntegration;
+using System;
 
 public class CourtController : MonoBehaviour
 {
@@ -18,12 +20,14 @@ public class CourtController : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private TextAsset _inkJSON;
 
+    [Header("Globals Ink File")]
+    [SerializeField] private InkFile _globalsInkFile;
+
     [Header("Dialogue UI")]
     [SerializeField] private GameObject _dialoguePanel;
     [SerializeField] private TextMeshProUGUI _dialogueText;
     [SerializeField] private GameObject _continueDialogueButton;
 
-    [Header("Dialogue UI")]
     [SerializeField] private GameObject[] _choices;
     private TextMeshProUGUI[] _choicesText;
 
@@ -31,6 +35,12 @@ public class CourtController : MonoBehaviour
 
     private bool _dialogueIsPlaying;
     private bool _isMakingChoices;
+    private DialogueVariables _dialogueVariables;
+
+    private void Awake()
+    {
+        _dialogueVariables = new DialogueVariables(_globalsInkFile.filePath, _playerKingdom);
+    }
 
     private void Start()
     {
@@ -81,6 +91,8 @@ public class CourtController : MonoBehaviour
         _continueDialogueButton.SetActive(true);
         _nextButton.SetActive(false);
 
+        _dialogueVariables.StartListening(_currentStory);
+
         ContinueStory();
     }
 
@@ -88,12 +100,15 @@ public class CourtController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
 
+        _dialogueVariables.StopListening(_currentStory);
+
         _dialogueIsPlaying = false;
         _isMakingChoices = false;
         _continueDialogueButton.SetActive(false);
         _dialoguePanel.SetActive(false);
         _dialogueText.text = "";
         _nextButton.SetActive(true);
+        // UpdateKingdomStats();
     }
 
     public void ContinueStory()
@@ -167,4 +182,21 @@ public class CourtController : MonoBehaviour
         _isMakingChoices = false;
         ContinueStory();
     }
+
+    //public Ink.Runtime.Object GetVariableState(string variableName)
+    //{
+    //    Ink.Runtime.Object variableValue = null;
+    //    _dialogueVariables.variables.TryGetValue(variableName, out variableValue);
+
+    //    return variableValue;
+    //}
+
+    //private void UpdateKingdomStats()
+    //{
+    //    Ink.Runtime.Object value = null;
+
+    //    // update gold
+    //    value = GetVariableState("gold");
+    //    _playerKingdom.AddGold(Int32.Parse(value.ToString()));
+    //}
 }
