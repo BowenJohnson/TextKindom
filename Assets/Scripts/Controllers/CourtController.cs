@@ -30,11 +30,13 @@ public class CourtController : MonoBehaviour
     private Story _currentStory;
 
     private bool _dialogueIsPlaying;
+    private bool _isMakingChoices;
 
     private void Start()
     {
         _playerKingdom = _playerKingdom.GetComponent<PlayerKingdom>();
         _dialogueIsPlaying = false;
+        _isMakingChoices = false;
         _dialoguePanel.SetActive(false);
 
         NewChoices();
@@ -87,6 +89,7 @@ public class CourtController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         _dialogueIsPlaying = false;
+        _isMakingChoices = false;
         _continueDialogueButton.SetActive(false);
         _dialoguePanel.SetActive(false);
         _dialogueText.text = "";
@@ -95,18 +98,23 @@ public class CourtController : MonoBehaviour
 
     public void ContinueStory()
     {
-        // if the story can continue then keep going else exit dialogue
-        if (_currentStory.canContinue)
+        // if there are choices to be made don't allow player to click to continue story
+        // until they have made a choice
+        if (!_isMakingChoices)
         {
-            // set text for current dialogue
-            _dialogueText.text = _currentStory.Continue();
-            // display choices, if any, for this dialogue line
-            DisplayChoices();
-        }
-        else
-        {
-            StartCoroutine(ExitDialogueMode());
-        }
+            // if the story can continue then keep going else exit dialogue
+            if (_currentStory.canContinue)
+            {
+                // set text for current dialogue
+                _dialogueText.text = _currentStory.Continue();
+                // display choices, if any, for this dialogue line
+                DisplayChoices();
+            }
+            else
+            {
+                StartCoroutine(ExitDialogueMode());
+            }
+        }       
     }
 
     private void NewChoices()
@@ -130,6 +138,12 @@ public class CourtController : MonoBehaviour
             Debug.LogError("More choices were given than the UI can support. Number of choices given: " + currentChoices.Count);
         }
 
+        // set making choices bool to true to prevent player from continue story
+        if (currentChoices.Count > 0)
+        {
+            _isMakingChoices = true;
+        }
+
         int idx = 0;
 
         // enable and initialize the choices up to the amount of choices for this line of dialogue
@@ -146,9 +160,11 @@ public class CourtController : MonoBehaviour
         }
     }
 
+    // enter choice selection into the story, reset _isMakingChoices, continue story
     public void MakeChoice(int choiceIndex)
     {
         _currentStory.ChooseChoiceIndex(choiceIndex);
+        _isMakingChoices = false;
         ContinueStory();
     }
 }
