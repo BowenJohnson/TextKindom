@@ -69,7 +69,7 @@ public class DialogueVariables
         {
             story.variablesState.SetGlobal(variable.Key, variable.Value);
         }
-
+        // TODO: Figure out why vars get reset depending on choice
         KingdomVarsToStory(story);
     }
 
