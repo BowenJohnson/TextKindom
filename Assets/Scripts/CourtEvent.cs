@@ -7,6 +7,5 @@ public class CourtEvent : ScriptableObject
 {
     [field: SerializeField] public string eventName { get; set; }
     [field: SerializeField] [field: TextArea] public string description { get; set; }
-    [SerializeField] private string[] _responses;
-    [SerializeField] private GameObject _subMenu;
+    [field: SerializeField] public TextAsset inkJSON { get; private set; }
 }

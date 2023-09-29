@@ -87,7 +87,6 @@ public class GameController : MonoBehaviour
 
         _courtMenu.SetActive(true);
         _courtController.isActive = true;
-        _courtController.TargetInputTextBox();
     }
 
     public void ActivateCharactersMenu()

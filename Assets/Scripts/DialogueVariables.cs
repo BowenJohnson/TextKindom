@@ -26,7 +26,7 @@ public class DialogueVariables
         {
             Ink.Runtime.Object value = globalVariableStory.variablesState.GetVariableWithName(name);
             variables.Add(name, value);
-            Debug.Log("Initialized global dialogue variable " + name + " = " + value);
+            // Debug.Log("Initialized global dialogue variable " + name + " = " + value);
         }
     }
 
@@ -53,18 +53,14 @@ public class DialogueVariables
         }
     }
 
-    private void KingdomVarsToStory()
+    // gets the current kingdom stats and ports them into the dialogue 
+    private void KingdomVarsToStory(Story story)
     {
-
-        // TODO: need to figure out how to convert int into ink runtime...
-        Ink.Runtime.Object value = new Ink.Runtime.Object();
-        Ink.Runtime.IntValue input = new IntValue();
-        int gold = _playerKingdom.GetGold();
-
-        //int someInt = (Ink.Runtime.IntValue)value;
-        
-        //value = (IntValue)gold;
-        //variables.Add("gold", value.Cast(gold));
+        story.variablesState["gold"] = _playerKingdom.GetGold();
+        story.variablesState["publicOpinion"] = _playerKingdom.GetPublicOpinion();
+        story.variablesState["recruits"] = _playerKingdom.GetRecruits()._count;
+        story.variablesState["soldiers"] = _playerKingdom.GetSoldiers()._count;
+        story.variablesState["veterans"] = _playerKingdom.GetVeterans()._count;
     }
 
     private void VariablesToStory(Story story)
@@ -73,9 +69,9 @@ public class DialogueVariables
         {
             story.variablesState.SetGlobal(variable.Key, variable.Value);
         }
+
+        KingdomVarsToStory(story);
     }
-
-
 
 
     public Ink.Runtime.Object GetVariableState(string variableName)
@@ -86,6 +82,7 @@ public class DialogueVariables
         return variableValue;
     }
 
+    // syncs the current kingdom stats to stats from the dialogue
     private void UpdateKingdomStats()
     {
         Ink.Runtime.Object value = null;
@@ -93,5 +90,21 @@ public class DialogueVariables
         // update gold
         value = GetVariableState("gold");
         _playerKingdom.SetGold(Int32.Parse(value.ToString()));
+
+        // update public opinion
+        value = GetVariableState("publicOpinion");
+        _playerKingdom.SetPublicOpinion(Int32.Parse(value.ToString()));
+
+        // update recruits
+        value = GetVariableState("recruits");
+        _playerKingdom.SetNumRecruits(Int32.Parse(value.ToString()));
+
+        // update soldiers
+        value = GetVariableState("soldiers");
+        _playerKingdom.SetNumSoldiers(Int32.Parse(value.ToString()));
+
+        // update veterans
+        value = GetVariableState("veterans");
+        _playerKingdom.SetNumVeterans(Int32.Parse(value.ToString()));
     }
 }

@@ -10,14 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 769af4a6e28dfa9468960f1c76d2d0b4, type: 3}
-  m_Name: BeggarTest
+  m_Name: Beggar
   m_EditorClassIdentifier: 
-  <eventName>k__BackingField: guy needs money
-  <description>k__BackingField: 'It''s a guy and he wants money.
-
-
-    Give him money?'
-  _responses:
-  - Yes
-  - No
-  _subMenu: {fileID: 0}
+  <eventName>k__BackingField: Beggar
+  <description>k__BackingField: A beggar comes and asks for gold for various reasons.
+  <inkJSON>k__BackingField: {fileID: 4900000, guid: 5b9ce130839371c4ab9c33cf2b5e4f47, type: 3}

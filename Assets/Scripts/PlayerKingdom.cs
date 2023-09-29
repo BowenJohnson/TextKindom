@@ -8,9 +8,9 @@ public class PlayerKingdom : MonoBehaviour
     [SerializeField] private int _gold;
     [SerializeField] private int _publicOpinion;
     [SerializeField] private List<Territories> _territories;
-    [SerializeField] private Troops _Recruits;
-    [SerializeField] private Troops _Soldiers;
-    [SerializeField] private Troops _Veterans;
+    [SerializeField] private Troops _recruits;
+    [SerializeField] private Troops _soldiers;
+    [SerializeField] private Troops _veterans;
     [SerializeField] private List<Characters> _characters;
     [SerializeField] private Dictionary<string, string> policies;
 
@@ -56,17 +56,17 @@ public class PlayerKingdom : MonoBehaviour
 
     public void StartingTroops(int recNum, int recCombatValue, int solNum, int solCombatValue, int vetNum, int vetCombatValue)
     {
-        _Recruits._rank = "Recruits";
-        _Recruits._count = recNum;
-        _Recruits._combatValue = recCombatValue;
+        _recruits._rank = "Recruits";
+        _recruits._count = recNum;
+        _recruits._combatValue = recCombatValue;
 
-        _Soldiers._rank = "Soldiers";
-        _Soldiers._count = solNum;
-        _Soldiers._combatValue = solCombatValue;
+        _soldiers._rank = "Soldiers";
+        _soldiers._count = solNum;
+        _soldiers._combatValue = solCombatValue;
 
-        _Veterans._rank = "Veterans";
-        _Veterans._count = vetNum;
-        _Veterans._combatValue = vetCombatValue;
+        _veterans._rank = "Veterans";
+        _veterans._count = vetNum;
+        _veterans._combatValue = vetCombatValue;
     }
 
     public string GetName()
@@ -89,6 +89,11 @@ public class PlayerKingdom : MonoBehaviour
         return _publicOpinion;
     }
 
+    public void SetPublicOpinion(int opinion)
+    {
+        _publicOpinion = opinion;
+    }
+
     public int GetNumTerritories()
     {
         return _territories.Count;
@@ -101,16 +106,31 @@ public class PlayerKingdom : MonoBehaviour
 
     public Troops GetRecruits()
     {
-        return _Recruits;
+        return _recruits;
     }
 
     public Troops GetSoldiers()
     {
-        return _Soldiers;
+        return _soldiers;
     }
 
     public Troops GetVeterans()
     {
-        return _Veterans;
+        return _veterans;
+    }
+
+    public void SetNumRecruits(int numTroops)
+    {
+        _recruits._count = numTroops;
+    }
+
+    public void SetNumSoldiers(int numTroops)
+    {
+        _soldiers._count = numTroops;
+    }
+
+    public void SetNumVeterans(int numTroops)
+    {
+        _veterans._count = numTroops;
     }
 }

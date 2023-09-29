@@ -10,15 +10,13 @@ using System;
 public class CourtController : MonoBehaviour
 {
     [SerializeField] private PlayerKingdom _playerKingdom;
-    [SerializeField] private TMP_InputField _inputText;
-    [SerializeField] private TMP_Text _outputText;
-    [SerializeField] private GameObject _enterButton;
     [SerializeField] private GameObject _nextButton;
-    [SerializeField] private string _storedText;
     public bool isActive { get; set; }
 
     [Header("Ink JSON")]
     [SerializeField] private TextAsset _inkJSON;
+
+    [SerializeField] private List<CourtEvent> _eventList;
 
     [Header("Globals Ink File")]
     [SerializeField] private InkFile _globalsInkFile;
@@ -65,26 +63,10 @@ public class CourtController : MonoBehaviour
         }
     }
 
-    public void PushText(string text)
-    {
-        _outputText.text = "";
-        _outputText.text = text;
-    }
-
-    public void GetTextButton()
-    {
-        _storedText = _inputText.text;
-    }
-
-    public void TargetInputTextBox()
-    {
-        _inputText.Select();
-    }
-
     public void StartDialogue()
     {
-        // Debug.Log(_inkJSON.text);
 
+        GetRandomEvent();
         _currentStory = new Story(_inkJSON.text);
         _dialogueIsPlaying = true;
         _dialoguePanel.SetActive(true);
@@ -183,20 +165,10 @@ public class CourtController : MonoBehaviour
         ContinueStory();
     }
 
-    //public Ink.Runtime.Object GetVariableState(string variableName)
-    //{
-    //    Ink.Runtime.Object variableValue = null;
-    //    _dialogueVariables.variables.TryGetValue(variableName, out variableValue);
-
-    //    return variableValue;
-    //}
-
-    //private void UpdateKingdomStats()
-    //{
-    //    Ink.Runtime.Object value = null;
-
-    //    // update gold
-    //    value = GetVariableState("gold");
-    //    _playerKingdom.AddGold(Int32.Parse(value.ToString()));
-    //}
+    // grabs a random event from the list of possible court events
+    private void GetRandomEvent()
+    {
+        CourtEvent randEvent = _eventList[UnityEngine.Random.Range(0, _eventList.Count)];
+        _inkJSON = randEvent.inkJSON;
+    }
 }
