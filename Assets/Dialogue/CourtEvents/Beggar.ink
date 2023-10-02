@@ -1,9 +1,22 @@
 INCLUDE Globals.ink
 
+// generate random number to determine which beggar possibility
 VAR version = 0 
 ~ version = RANDOM(1,3)
 
--> main
+// this update glovbals function prevents the unchanging global variables 
+// from resetting back to 0 after the first court even selection is made for some reason...
+ ->updateGlobals
+
+// ->main
+
+=== updateGlobals ===
+~ gold = (gold + 0)
+~ publicOpinion = (publicOpinion + 0)
+~ recruits = (recruits + 0)
+~ soldiers = (soldiers + 0)
+~ veterans = (veterans + 0)
+->main
 
 === main ===
 A man in ragged clothing stands before you.
@@ -14,7 +27,6 @@ A man in ragged clothing stands before you.
 - 3: ->dog
 }
 
-
 === general ===
 Please spare some gold Sire, I cannot afford food.
     ->choices
@@ -23,15 +35,28 @@ Please spare some gold Sire, I cannot afford food.
 I cannot support my family, please spare some coins for us.
     ->choices
 
-
+// no offer to join military because he would definitely decline
+// because then he wouldn't be able to take care of his dog
 == dog ===
 My dog will surely starve if I can't find some money, please help mi'liege.
     * [Offer 3 gold]
-        How coud I possibly say no to a dog in need.
+        How coud I possibly say no to a dog in need?
         ->accept
     * [Decline]
         ->decline
+    * [Conscript Into Military Service]
+        ->conscript
 
+// helper function so I don't need to rewrite these choices every time
+=== choices ===
+* [Offer 3 gold]
+    -> accept
+* [Decline]
+    -> decline
+* [Offer Military Service]
+    ->military_service
+* [Conscript Into Military Service]
+    ->conscript
 
 === accept ===
 ~ gold = (gold - 3)
@@ -57,16 +82,7 @@ Take him to the barracks and inform the captain of his new recruit.
 Wait! Sire! You can't! The beggar cries as the guards drag him out of the room.
 -> END
 
-=== choices ===
-* [Offer 3 gold]
-    -> accept
-* [Decline]
-    -> decline
-* [Offer Military Service]
-    ->military_service
-* [Conscript Into Military Service]
-    ->conscript
-    
+// The beggar's repsonse will be a random possibility
 === service_respose ===
 VAR choice = 0 
 ~ choice = RANDOM(1,2)
@@ -84,5 +100,4 @@ The beggar is escourted out with the look of a man with a new lease on life.
 I'm afraid I am unfit to serve sire, so I must decline.
 The beggar is escourted out looking rather dejected.
 -> END
-
 

@@ -32,8 +32,9 @@ public class DialogueVariables
 
     public void StartListening(Story story)
     {
+        KingdomVarsToStory(story);
         // VariablesToStory needs to happen before assigning the listener
-        VariablesToStory(story);
+        //VariablesToStory(story);
         story.variablesState.variableChangedEvent += VariableChanged;
     }
 
@@ -65,12 +66,12 @@ public class DialogueVariables
 
     private void VariablesToStory(Story story)
     {
-        foreach(KeyValuePair<string, Ink.Runtime.Object> variable in variables)
+        foreach (KeyValuePair<string, Ink.Runtime.Object> variable in variables)
         {
             story.variablesState.SetGlobal(variable.Key, variable.Value);
         }
         // TODO: Figure out why vars get reset depending on choice
-        KingdomVarsToStory(story);
+        // KingdomVarsToStory(story);
     }
 
 
@@ -85,26 +86,28 @@ public class DialogueVariables
     // syncs the current kingdom stats to stats from the dialogue
     private void UpdateKingdomStats()
     {
+        //int gold = Int32.Parse(story.variablesState.GetVariableWithName("gold").ToString());
         Ink.Runtime.Object value = null;
 
         // update gold
         value = GetVariableState("gold");
         _playerKingdom.SetGold(Int32.Parse(value.ToString()));
+        //_playerKingdom.SetGold(Int32.Parse(story.variablesState.GetVariableWithName("gold").ToString()));
 
-        // update public opinion
+        //// update public opinion
         value = GetVariableState("publicOpinion");
         _playerKingdom.SetPublicOpinion(Int32.Parse(value.ToString()));
 
-        // update recruits
+        //// update recruits
         value = GetVariableState("recruits");
         _playerKingdom.SetNumRecruits(Int32.Parse(value.ToString()));
 
-        // update soldiers
+        //// update soldiers
         value = GetVariableState("soldiers");
         _playerKingdom.SetNumSoldiers(Int32.Parse(value.ToString()));
 
-        // update veterans
-        value = GetVariableState("veterans");
-        _playerKingdom.SetNumVeterans(Int32.Parse(value.ToString()));
+        //// update veterans
+        //value = GetVariableState("veterans");
+        //_playerKingdom.SetNumVeterans(Int32.Parse(value.ToString()));
     }
 }
